@@ -660,7 +660,7 @@ function doneHtml(){
   for(const {e,i} of idx){
     if(n>=doneLimit)break;const d=logDate(e);
     if(d!==cur){cur=d;html+=`<div class="day">${label(d)} · ${fmtH(totals[d])}</div>`;}
-    const it=all.find(x=>x.id===e.k.split('|')[0]),st=e.st?[e.st,e.en]:(it&&it.start&&it.end?[it.start,it.end]:null);
+    const it=all.find(x=>x.id===e.k.split('|')[0]),st=e.st?[e.st,e.en]:(e.c&&it&&it.start&&it.end?[it.start,it.end]:null);
     html+=`<div class="dn" data-i="${i}"><div><div class="nm">${esc(logName(e))}</div><div class="tm">${st?fmtT(st[0])+' – '+fmtT(st[1])+' · ':''}${e.c?'class':'session'}</div></div><div class="hh">${fmtH(e.h)}</div></div>`;n++;
   }
   if(idx.length>n)html+='<button class="btn ghost" id="done-more" style="width:100%;margin:6px 0">Show more</button>';

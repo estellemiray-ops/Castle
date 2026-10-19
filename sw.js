@@ -1,6 +1,6 @@
 // Castle of Devotion: keeps the app available offline.
 // Bump VERSION when you upload a new index.html so phones refresh their copy.
-const VERSION = 'castle-v1';
+const VERSION = 'castle-v2';
 const FILES = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 
 self.addEventListener('install', e => {
