@@ -65,11 +65,11 @@ body{background:#03010a;color:var(--ink);font-family:'Nunito',system-ui,-apple-s
 .empty{text-align:center;padding:26px 6px;color:rgba(180,140,255,.4);line-height:1.7}
 .sub{display:flex;align-items:center;gap:10px;padding:11px 12px;margin-bottom:7px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.025)}
 .sub div:first-child{flex:1}
-#modal,#bkm,#am,#cm,#sm,#dm,#wtm,#lgm{display:none;position:fixed;inset:0;z-index:50;background:rgba(3,1,10,.78);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px}
-#modal.open,#bkm.open,#am.open,#cm.open,#sm.open,#dm.open,#wtm.open,#lgm.open{display:flex}
+#modal,#bkm,#am,#cm,#sm,#dm,#wtm,#lgm,#wsm{display:none;position:fixed;inset:0;z-index:50;background:rgba(3,1,10,.78);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px}
+#modal.open,#bkm.open,#am.open,#cm.open,#sm.open,#dm.open,#wtm.open,#lgm.open,#wsm.open{display:flex}
 #cm{z-index:60}
-#box,#bbox,#abox,#cbox,#sbox,#dbox,#wtbox,#lbox{width:100%;max-width:340px;padding:24px;border:1px solid rgba(180,140,255,.25);border-radius:10px;background:linear-gradient(135deg,rgba(12,6,28,.98),rgba(18,9,40,.98));box-shadow:0 0 40px rgba(120,60,255,.2)}
-#box h3,#bbox h3,#abox h3,#cbox h3,#sbox h3,#dbox h3,#wtbox h3,#lbox h3{font-family:'Nunito',system-ui,-apple-system,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(200,170,255,.85);margin-bottom:14px}
+#box,#bbox,#abox,#cbox,#sbox,#dbox,#wtbox,#lbox,#wsbox{width:100%;max-width:340px;padding:24px;border:1px solid rgba(180,140,255,.25);border-radius:10px;background:linear-gradient(135deg,rgba(12,6,28,.98),rgba(18,9,40,.98));box-shadow:0 0 40px rgba(120,60,255,.2)}
+#box h3,#bbox h3,#abox h3,#cbox h3,#sbox h3,#dbox h3,#wtbox h3,#lbox h3,#wsbox h3{font-family:'Nunito',system-ui,-apple-system,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(200,170,255,.85);margin-bottom:14px}
 .lb{display:block;font-family:'Nunito',system-ui,-apple-system,sans-serif;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(180,140,255,.55);margin-bottom:6px}
 input[type=text],input[type=time],input[type=number],input[type=date]{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(180,140,255,.2);border-radius:6px;color:var(--ink);font-family:'Nunito',system-ui,-apple-system,sans-serif;font-size:1rem;padding:9px 11px;outline:none;margin-bottom:13px;color-scheme:dark}
 input:focus{border-color:rgba(180,100,255,.55)}
@@ -111,6 +111,18 @@ textarea.wish{font-family:inherit;font-size:1rem;line-height:1.4;margin-bottom:0
 #dm-b{overflow-y:auto;margin:0 -6px 0 0;padding-right:6px;flex:1}
 .dn{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;display:flex;align-items:center;gap:10px;padding:9px 10px;margin-bottom:6px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.03)}
 .dn .nm{font-size:.98rem}.dn .tm{margin-top:1px}.dn .hh{margin-left:auto;font-weight:700;color:var(--glow);font-size:.85rem;white-space:nowrap}
+#intro{display:none;position:fixed;inset:0;z-index:90;align-items:center;justify-content:center;padding:calc(24px + env(safe-area-inset-top,0px)) 24px calc(24px + env(safe-area-inset-bottom,0px));background:radial-gradient(ellipse at 50% 28%,#26104f 0%,#07021a 62%,#03010a 100%)}
+#intro.open{display:flex}
+#in-wrap{width:100%;max-width:380px;text-align:center;display:flex;flex-direction:column;align-items:center}
+#in-art{width:132px;height:132px;margin-bottom:18px}
+#in-art svg{width:100%;height:100%;filter:drop-shadow(0 0 14px rgba(150,90,255,.55))}
+#in-t{font-weight:800;font-size:1.45rem;letter-spacing:.02em;color:var(--glow);text-shadow:0 0 22px rgba(180,100,255,.5);margin-bottom:10px}
+#in-b{font-size:1.02rem;line-height:1.55;color:rgba(232,223,245,.88);min-height:7.6em;margin-bottom:16px}
+#in-dots{display:flex;gap:8px;margin-bottom:22px}
+#in-dots i{width:8px;height:8px;border-radius:50%;background:rgba(180,140,255,.28);transition:all .25s}
+#in-dots i.on{background:var(--glow);box-shadow:0 0 10px rgba(180,120,255,.8);width:22px;border-radius:5px}
+#in-nav{display:flex;gap:10px;width:100%}#in-nav .btn{flex:1;text-align:center;padding:13px 12px}
+#in-skip{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:16px}
 #fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:9;display:none}
 body.all #fab{display:block}
 </style>
@@ -126,7 +138,7 @@ body.all #fab{display:block}
     <h1>Castle of Devotion<small><span id="cnt">0</span> stones placed · <span id="nx"></span></small></h1>
     <button class="btn ghost" id="showall">Foresee</button>
   </div>
-  <div id="tabs"><div class="on" data-t="s">Sessions</div><div data-t="u">Subjects</div><div data-t="c">Classes</div><div data-t="w">Stopwatch</div><div data-t="x">Sustenance</div><div data-t="j">Scraps</div></div>
+  <div id="tabs"><div class="on" data-t="s">Sessions</div><div data-t="u">Subjects</div><div data-t="c">Classes</div><div data-t="w">Stopwatch</div><div data-t="x">Worship</div><div data-t="j">Scraps</div></div>
   <div id="body"></div>
 </div>
 
@@ -146,6 +158,14 @@ body.all #fab{display:block}
   <div class="tr"><div><label class="lb" for="tw-h">Hours</label><input type="number" id="tw-h" min="0" max="999" inputmode="numeric"></div><div><label class="lb" for="tw-m">Min</label><input type="number" id="tw-m" min="0" max="59" inputmode="numeric"></div><div><label class="lb" for="tw-s">Sec</label><input type="number" id="tw-s" min="0" max="59" inputmode="numeric"></div></div>
   <div class="acts"><button class="btn ghost" id="tw-x">Cancel</button><button class="btn" id="tw-ok">Set</button></div>
 </div></div>
+<div id="wsm"><div id="wsbox">
+  <h3>Add time you took</h3>
+  <div class="tr"><div><label class="lb" for="ws-h">Hours</label><input type="number" id="ws-h" min="0" max="24" inputmode="numeric"></div><div><label class="lb" for="ws-m">Min</label><input type="number" id="ws-m" min="0" max="59" inputmode="numeric"></div></div>
+  <label class="lb" for="ws-n">What did you do? (optional)</label><input type="text" id="ws-n" maxlength="80">
+  <label class="lb" for="ws-d">Day</label><input type="date" id="ws-d">
+  <div class="acts"><button class="btn ghost" id="ws-x">Cancel</button><button class="btn" id="ws-ok">Add</button></div>
+  <div class="tm" id="ws-msg" style="margin-top:8px;min-height:1em"></div>
+</div></div>
 <div id="lgm"><div id="lbox">
   <h3 id="lg-h">Log a session</h3>
   <label class="lb" for="lg-sub">Subject</label>
@@ -162,6 +182,7 @@ body.all #fab{display:block}
   <textarea class="wish" id="sm-t" rows="4" maxlength="300" style="margin-bottom:12px"></textarea>
   <div class="acts"><button class="btn ghost" id="sm-x">Cancel</button><button class="btn del" id="sm-d">Delete</button><button class="btn" id="sm-s">Save</button></div>
 </div></div>
+<div id="intro"><button class="btn ghost" id="in-skip" style="padding:7px 12px">Skip</button><div id="in-wrap"><div id="in-art"></div><div id="in-t"></div><div id="in-b"></div><div id="in-dots"></div><div id="in-nav"><button class="btn ghost" id="in-back">Back</button><button class="btn" id="in-next">Next</button></div></div></div>
 <div id="cm"><div id="cbox">
   <h3>Are you sure?</h3>
   <div class="tm" id="cm-m" style="margin-bottom:16px;line-height:1.4"></div>
@@ -184,6 +205,7 @@ body.all #fab{display:block}
   <input type="file" id="bk-f" accept=".json,application/json,text/plain">
   <div class="acts"><button class="btn ghost" id="bk-x">Close</button><button class="btn" id="bk-r">Restore</button></div>
   <div class="tm" id="bk-m" style="margin-top:10px;min-height:1em"></div>
+  <div class="tm" style="margin-top:12px;display:flex;align-items:center;gap:10px"><span>Build 4</span><button class="btn ghost" id="bk-rf" style="padding:6px 10px;font-size:.55rem">Refresh app</button><button class="btn ghost" id="bk-intro" style="padding:6px 10px;font-size:.55rem">Show intro</button></div>
 </div></div>
 
 <script>
@@ -465,7 +487,7 @@ const clock=new THREE.Clock();
 })();
 
 // ═══════════ DATA ═══════════
-let S={subjects:[],log:[],skip:{},watches:[],classes:[],sus:{},scraps:[]};
+let S={subjects:[],log:[],skip:{},watches:[],classes:[],sus:{},scraps:[],worship:{sessions:[],active:null}};
 try{const r=localStorage.getItem('castle_devotion_v1');if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
 const save=()=>{try{localStorage.setItem('castle_devotion_v1',JSON.stringify(S));}catch(e){}};
 const pad=n=>String(n).padStart(2,'0');
@@ -482,7 +504,7 @@ const isDone=k=>S.log.some(e=>e.k===k);
 
 function toggle(sub,date){
   const k=sub.id+'|'+ymd(date),i=S.log.findIndex(e=>e.k===k);
-  if(i<0)S.log.push(Object.assign({k,h:dur(sub),n:sub.name},sub.id[0]==='c'?{c:1}:{}));else S.log.splice(i,1);
+  if(i<0)S.log.push(Object.assign({k,h:dur(sub),n:sub.name,ts:Date.now()},sub.id[0]==='c'?{c:1}:{}));else S.log.splice(i,1);
   save();syncBlocks();
   render();
 }
@@ -506,7 +528,7 @@ function render(){
   document.body.classList.toggle('jar',tab==='j');document.body.classList.toggle('vis',tab==='x'||tab==='j');visMode(tab==='x'?'bottle':tab==='j'?'jar':null);
   if(tab==='w'){renderWatches();return;}
   if(tab==='c'){renderClasses();return;}
-  if(tab==='x'){renderSus();return;}
+  if(tab==='x'){renderWorship();return;}
   if(tab==='j'){renderScraps();return;}
   if(tab==='u'){
     body.innerHTML=(S.subjects.length?S.subjects.map(s=>`<div class="sub" data-id="${s.id}"><div><div class="nm">${esc(s.name)}</div><div class="tm">${fmtH(S.log.filter(e=>e.k.split('|')[0]===s.id).reduce((a,e)=>a+e.h,0))} logged</div></div><button class="btn del" data-del="${s.id}">Remove</button></div>`).join(''):'<div class="empty">No subjects yet.<br>Add one here, or just type a new name when you log a session.</div>')+'<button class="btn" id="addsub" style="width:100%;margin-top:6px">+ Add subject</button><button class="btn ghost" id="bkbtn" style="width:100%;margin-top:8px">Backup &amp; restore</button>';
@@ -573,9 +595,11 @@ document.getElementById('f-save').onclick=()=>{
 
 // backup & restore
 const bkm=document.getElementById('bkm'),bkt=document.getElementById('bk-t'),bkSay=t=>{document.getElementById('bk-m').textContent=t;};
-const bkData=()=>JSON.stringify({app:'castle-of-devotion',v:1,saved:new Date().toISOString(),subjects:S.subjects,log:S.log,skip:S.skip,watches:S.watches,classes:S.classes,sus:S.sus,scraps:S.scraps});
+const bkData=()=>JSON.stringify({app:'castle-of-devotion',v:1,saved:new Date().toISOString(),subjects:S.subjects,log:S.log,skip:S.skip,watches:S.watches,classes:S.classes,sus:S.sus,scraps:S.scraps,worship:S.worship});
 function openBackup(){bkt.value=bkData();bkSay('');bkm.classList.add('open');}
 document.getElementById('bk-x').onclick=()=>bkm.classList.remove('open');
+// refresh: drop the saved offline copy so the newest version loads (your data is not touched)
+document.getElementById('bk-rf').onclick=async()=>{try{if(navigator.serviceWorker){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()));}if(window.caches){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)));}}catch(e){}location.reload();};
 bkm.onclick=e=>{if(e.target===bkm)bkm.classList.remove('open');};
 document.getElementById('bk-dl').onclick=async()=>{
   const data=bkData(),name='castle-of-devotion-'+ymd(new Date())+'.json';
@@ -598,6 +622,7 @@ document.getElementById('bk-r').onclick=()=>{
   S.log=d.log.filter(x=>x&&typeof x.k==='string'&&typeof x.h==='number');
   S.skip=(d.skip&&typeof d.skip==='object')?d.skip:{};
   if(d.sus&&typeof d.sus==='object'&&!Array.isArray(d.sus))S.sus=d.sus;
+  if(d.worship&&Array.isArray(d.worship.sessions))S.worship={sessions:d.worship.sessions.filter(x=>x&&x.id&&typeof x.h==='number'&&x.date),active:d.worship.active||null};
   if(Array.isArray(d.scraps)){S.scraps=d.scraps.filter(x=>x&&x.id&&typeof x.text==='string');if(jarReady)rebuildJar();}
   if(Array.isArray(d.classes))S.classes=d.classes.filter(x=>x&&x.id&&x.name&&x.start&&x.end&&Array.isArray(x.days)&&x.created);
   if(Array.isArray(d.watches))S.watches=d.watches.filter(x=>x&&x.id&&typeof x.name==='string'&&typeof x.acc==='number');
@@ -710,6 +735,39 @@ document.getElementById('lg-ok').onclick=()=>{
   toast(`Logged ${fmtH(h)} of ${sub.name}.${undoW?' Stopwatch reset.':''}`,()=>{S.log=S.log.filter(x=>x!==entry);if(undoW)undoW();save();syncBlocks();render();});
 };
 
+// first-run intro (shown once to new people; reopen it from Backup & restore)
+const ART={
+  castle:'<svg viewBox="0 0 120 120"><defs><radialGradient id="ig" cx="50%" cy="60%" r="60%"><stop offset="0" stop-color="#8a4cff" stop-opacity=".5"/><stop offset="1" stop-color="#8a4cff" stop-opacity="0"/></radialGradient></defs><circle cx="60" cy="66" r="56" fill="url(#ig)"/><g fill="#5a3aa8" stroke="#d4b8ff" stroke-width="1.5"><rect x="30" y="52" width="60" height="42"/><rect x="21" y="40" width="18" height="54"/><rect x="81" y="40" width="18" height="54"/><rect x="48" y="32" width="24" height="62"/></g><g fill="#ffd870"><rect x="57" y="44" width="5" height="9"/><rect x="25" y="52" width="4" height="8"/><rect x="91" y="52" width="4" height="8"/></g><path d="M52 94V82a8 8 0 0116 0v12z" fill="#1d0c40"/><path d="M21 40l9-13 9 13M81 40l9-13 9 13M48 32l12-17 12 17" fill="#8a4cff" stroke="#d4b8ff" stroke-width="1.5"/></svg>',
+  stones:'<svg viewBox="0 0 120 120"><g stroke="#d4b8ff" stroke-width="1.5"><rect x="22" y="76" width="76" height="24" rx="8" fill="#5a3aa8"/><rect x="34" y="50" width="62" height="24" rx="8" fill="#6f4cc4"/><rect x="26" y="24" width="52" height="24" rx="8" fill="#8a64e0"/></g><circle cx="94" cy="30" r="12" fill="none" stroke="#ffd870" stroke-width="3"/><path d="M94 23v8l5 3" fill="none" stroke="#ffd870" stroke-width="3" stroke-linecap="round"/></svg>',
+  calm:'<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="24" fill="#ffd870" opacity=".92"/><g stroke="#ffd870" stroke-width="4" stroke-linecap="round" opacity=".75"><path d="M60 14v12M60 94v12M14 60h12M94 60h12M28 28l8 8M84 84l8 8M92 28l-8 8M36 84l-8 8"/></g></svg>',
+  care:'<svg viewBox="0 0 120 120"><path d="M40 16c10 18 24 32 24 52a24 24 0 01-48 0c0-20 14-34 24-52z" transform="translate(4 8)" fill="#6fa8ff" stroke="#d4b8ff" stroke-width="1.5"/><g transform="translate(66 52)"><rect x="0" y="12" width="40" height="46" rx="10" fill="#5a3aa8" stroke="#d4b8ff" stroke-width="1.5"/><rect x="6" y="2" width="28" height="12" rx="4" fill="#8a64e0" stroke="#d4b8ff" stroke-width="1.5"/><rect x="10" y="24" width="14" height="9" rx="2" fill="#f5efe6"/></g></svg>',
+  safe:'<svg viewBox="0 0 120 120"><rect x="34" y="12" width="52" height="96" rx="11" fill="#2a1458" stroke="#d4b8ff" stroke-width="2"/><rect x="42" y="26" width="36" height="62" rx="4" fill="#0d0420"/><circle cx="60" cy="97" r="3.5" fill="#d4b8ff"/><path d="M48 58l8 8 16-18" fill="none" stroke="#ffd870" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+};
+const INTRO=[
+  {a:'castle',t:'Welcome to your castle',b:'Every hour you put into your work places a stone. Your castle, its garden and a little school village grow, one hour at a time.'},
+  {a:'stones',t:'Log what you did',b:'Tap “+ Log a session”, choose a subject and say how long you worked. One hour is one stone, and shorter sessions add up until they make one.'},
+  {a:'calm',t:'No schedule, no pressure',b:'There are no streaks and nothing to catch up on. Work when you can. Classes you add show up on their days, and a missed one simply disappears.'},
+  {a:'care',t:'Make room for yourself',b:'In Worship, slow time spent caring for yourself fills a glowing bottle, and your work slowly empties it. Keep small wishes in your jar of scraps, and time breaks with the stopwatch.'},
+  {a:'safe',t:'Your castle lives on this phone',b:'Nothing is sent anywhere. Make a backup now and then in Subjects → Backup & restore, so you never lose it.'}
+];
+let inStep=0;const intro=document.getElementById('intro');
+function introSeen(){try{return !!localStorage.getItem('castle_intro_v1');}catch(e){return false;}}
+function introDraw(){
+  const s=INTRO[inStep],last=inStep===INTRO.length-1;
+  document.getElementById('in-art').innerHTML=ART[s.a];document.getElementById('in-t').textContent=s.t;document.getElementById('in-b').textContent=s.b;
+  document.getElementById('in-dots').innerHTML=INTRO.map((_,i)=>`<i class="${i===inStep?'on':''}"></i>`).join('');
+  document.getElementById('in-back').style.visibility=inStep?'visible':'hidden';
+  document.getElementById('in-next').textContent=last?'Begin':'Next';
+  document.getElementById('in-skip').style.visibility=last?'hidden':'visible';
+}
+function openIntro(){inStep=0;introDraw();intro.classList.add('open');}
+function closeIntro(first){intro.classList.remove('open');try{localStorage.setItem('castle_intro_v1','1');}catch(e){}
+  if(first&&!S.log.length&&!S.subjects.length)openLog();}
+document.getElementById('in-next').onclick=()=>{if(inStep<INTRO.length-1){inStep++;introDraw();}else closeIntro(true);};
+document.getElementById('in-back').onclick=()=>{if(inStep>0){inStep--;introDraw();}};
+document.getElementById('in-skip').onclick=()=>closeIntro(false);
+document.getElementById('bk-intro').onclick=()=>{bkm.classList.remove('open');openIntro();};
+
 // in-app confirmation (browser confirm() can be blocked inside published pages)
 const cm=document.getElementById('cm');let cmYes=null;
 function askConfirm(msg,label,yes){document.getElementById('cm-m').textContent=msg;document.getElementById('cm-y').textContent=label;cmYes=yes;cm.classList.add('open');}
@@ -764,36 +822,80 @@ function renderClasses(){
 let lastDay=ymd(new Date());
 setInterval(()=>{const t=ymd(new Date());if(t!==lastDay){lastDay=t;if(tab==='s'||tab==='x')render();}},30000);
 
-// sustenance: daily self-care checklist plus a water bottle that fills glass by glass
-const SUS=[['b','Breakfast'],['l','Lunch'],['d','Dinner'],['f','Fruit snack'],['wk','Walk'],['sh','Shower'],['t1','Brush teeth · morning'],['t2','Brush teeth · night'],['h','Brush hair'],['sk1','Skincare · morning'],['sk2','Skincare · night']];
-const GOAL=10;
-const susDay=()=>{const k=ymd(new Date());return S.sus[k]||(S.sus[k]={w:0,i:{}});};
-function updateBottle(){
-  const w=susDay().w;wTarget=Math.min(1,w/GOAL)*2.5;bottleFull=w>=GOAL;
-  document.getElementById('bcount').textContent=w>=GOAL?`${w} / ${GOAL} · bottle full`:`${w} / ${GOAL} glasses`;
+// worship: slow, caring time. It fills a glowing bottle (one hour holds four hours of work) and logged work slowly empties it.
+function worshipCredit(){
+  const ev=[];
+  S.log.forEach((e,i)=>ev.push({d:logDate(e),t:e.ts||0,i,w:0,h:e.h}));
+  S.worship.sessions.forEach((x,i)=>ev.push({d:x.date,t:x.ts||0,i:1e6+i,w:1,h:x.h}));
+  ev.sort((a,b)=>a.d.localeCompare(b.d)||a.t-b.t||a.i-b.i);
+  let c=0;for(const e of ev){if(e.w)c+=4*e.h;else c=Math.max(0,c-e.h);}
+  return c;
 }
-function renderSus(){
-  const day=susDay(),done=SUS.filter(([id])=>day.i[id]).length;
-  body.innerHTML=`<div class="day" style="margin-top:2px">Water</div><div class="wrow"><button class="drink" id="drink"><span class="fill"></span><span class="lbl">Hold while you drink a glass</span></button><button class="btn ghost mini" id="undo-w" aria-label="Remove a glass">−</button></div><div class="tm" style="margin-bottom:6px">${day.w} of ${GOAL} glasses today</div>`
-   +`<div class="day">Today · ${done} of ${SUS.length} done</div>`
-   +SUS.map(([id,name])=>`<div class="sw ${day.i[id]?'done':''}" data-sk="${id}"><div class="bg">${day.i[id]?'↺ UNDO':'✦ DONE'}</div><div class="in"><div class="grip">⟷</div><div><div class="nm">${name}</div></div></div></div>`).join('');
-  updateBottle();
-  const dr=document.getElementById('drink');let t=null;
-  const stop=()=>{clearTimeout(t);dr.classList.remove('hold');};
-  dr.oncontextmenu=e=>e.preventDefault();
-  dr.onpointerdown=e=>{dr.classList.add('hold');t=setTimeout(()=>{dr.classList.remove('hold');susDay().w++;save();if(navigator.vibrate)try{navigator.vibrate(40);}catch(x){}renderSus();},700);};
-  dr.onpointerup=dr.onpointerleave=dr.onpointercancel=stop;
-  document.getElementById('undo-w').onclick=()=>{const d=susDay();if(d.w>0){d.w--;save();renderSus();}};
-  body.querySelectorAll('.sw').forEach(el=>{
-    const inn=el.querySelector('.in');let sx=0,dx=0,on=false;
-    inn.oncontextmenu=e=>e.preventDefault();
-    inn.onpointerdown=e=>{on=true;sx=e.clientX;dx=0;el.classList.add('drag');inn.setPointerCapture(e.pointerId);};
-    inn.onpointermove=e=>{if(!on)return;dx=e.clientX-sx;inn.style.transform=`translateX(${Math.max(-140,Math.min(140,dx))}px)`;};
-    const end=()=>{if(!on)return;on=false;el.classList.remove('drag');inn.style.transform='';
-      if(Math.abs(dx)>90){const d=susDay(),k=el.dataset.sk;if(d.i[k])delete d.i[k];else d.i[k]=1;save();renderSus();}};
-    inn.onpointerup=end;inn.onpointercancel=()=>{on=false;el.classList.remove('drag');inn.style.transform='';};
+function updateBottle(){
+  const c=worshipCredit();wTarget=Math.min(1,c/20)*2.5;bottleFull=c>=20;
+  document.getElementById('bcount').textContent=c>0.02?`${fmtH(c)} of work covered`:'Empty · a slow hour will fill it';
+}
+const wsElapsed=a=>a.acc+(a.at?Date.now()-a.at:0);
+function renderWorship(){
+  const wn=S.worship,a=wn.active,total=wn.sessions.reduce((x,e)=>x+e.h,0);
+  let h=`<div id="stats"><div class="row"><span>Worship <b>${fmtH(total)}</b></span><span>Covers <b>${fmtH(worshipCredit())}</b> of work</span></div><div class="msg">Slow, caring time fills the bottle. Your work slowly empties it.</div></div>`;
+  if(!a)h+='<button class="btn" id="ws-begin" style="width:100%;margin-bottom:8px">Begin a slow hour</button><button class="btn ghost" id="ws-add" style="width:100%">+ Add time I already took</button>';
+  else h+=`<div class="sw-card ${a.at?'run':''}"><div class="wt" id="ws-t">${fmtW(wsElapsed(a))}</div><div class="wb"><button class="btn" id="ws-toggle">${a.at?'Pause':'Resume'}</button><button class="btn ghost" id="ws-finish">Finish</button><button class="btn del" id="ws-discard">Discard</button></div>
+    <label class="lb" for="ws-note" style="margin-top:14px">Something you are doing</label><div class="wnew"><input type="text" id="ws-note" maxlength="80"><button class="btn" id="ws-nadd">+ Add</button></div>
+    ${a.notes.map((n,i)=>`<div class="dn" data-ni="${i}"><div><div class="nm">${esc(n.m)}</div></div><div class="hh">${fmtW(n.s*1000)}</div></div>`).join('')}
+    ${a.notes.length?'<div class="tm">Long-press a note to remove it</div>':''}</div>`;
+  const by={};wn.sessions.forEach(x=>(by[x.date]=by[x.date]||[]).push(x));
+  const dates=Object.keys(by).sort().reverse();
+  if(dates.length){
+    const tk=ymd(new Date()),yd=new Date();yd.setDate(yd.getDate()-1);const yk=ymd(yd);
+    h+='<div class="tm" style="margin:14px 0 0">Worship so far · long-press an entry to remove it</div>';
+    let n=0;
+    for(const d of dates){if(n>=60)break;
+      h+=`<div class="day">${d===tk?'Today':d===yk?'Yesterday':new Date(d+'T00:00').toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short',year:'numeric'})} · ${fmtH(by[d].reduce((x,e)=>x+e.h,0))}</div>`;
+      for(const e of by[d].slice().reverse()){n++;h+=`<div class="dn" data-sid="${e.id}"><div><div class="nm">${e.notes&&e.notes.length?esc(e.notes.join(' · ')):'Slow time'}</div></div><div class="hh">${fmtH(e.h)}</div></div>`;}
+    }
+  }
+  body.innerHTML=h;updateBottle();
+  const $=id=>document.getElementById(id),go=()=>{save();renderWorship();};
+  if($('ws-begin'))$('ws-begin').onclick=()=>{wn.active={acc:0,at:Date.now(),notes:[]};go();};
+  if($('ws-add'))$('ws-add').onclick=openWsAdd;
+  if(a){
+    $('ws-toggle').onclick=()=>{if(a.at){a.acc+=Date.now()-a.at;a.at=null;}else a.at=Date.now();go();};
+    $('ws-discard').onclick=()=>askConfirm('Discard this session without saving it?','Discard',()=>{wn.active=null;go();});
+    $('ws-finish').onclick=()=>{
+      const mins=Math.round(wsElapsed(a)/60000);
+      if(mins<1){askConfirm('That is under a minute. Discard this session?','Discard',()=>{wn.active=null;go();});return;}
+      const rec={id:'w'+Date.now().toString(36)+Math.floor(Math.random()*1e3),h:mins/60,date:ymd(new Date()),ts:Date.now(),notes:a.notes.map(x=>x.m)};
+      wn.sessions.push(rec);wn.active=null;save();renderWorship();
+      toast(`Added ${fmtH(rec.h)} of worship.`,()=>{wn.sessions=wn.sessions.filter(x=>x!==rec);wn.active=a;save();renderWorship();});
+    };
+    const addNote=()=>{const t=$('ws-note').value.trim();if(!t)return;a.notes.push({m:t,s:Math.floor(wsElapsed(a)/1000)});go();};
+    $('ws-nadd').onclick=addNote;$('ws-note').onkeydown=e=>{if(e.key==='Enter')addNote();};
+  }
+  body.querySelectorAll('.dn').forEach(el=>{let t=null,x0=0,y0=0;
+    el.oncontextmenu=e=>e.preventDefault();
+    el.onpointerdown=e=>{x0=e.clientX;y0=e.clientY;t=setTimeout(()=>{
+      if(el.dataset.ni!==undefined){const i=+el.dataset.ni;askConfirm('Remove this note?','Remove',()=>{a.notes.splice(i,1);go();});}
+      else{const id=el.dataset.sid;askConfirm('Remove this worship entry? The bottle will adjust.','Remove',()=>{wn.sessions=wn.sessions.filter(x=>x.id!==id);go();});}
+    },550);};
+    el.onpointermove=e=>{if(Math.abs(e.clientX-x0)>8||Math.abs(e.clientY-y0)>8)clearTimeout(t);};
+    el.onpointerup=el.onpointercancel=el.onpointerleave=()=>clearTimeout(t);
   });
 }
+const wsm=document.getElementById('wsm');
+function openWsAdd(){const t=ymd(new Date());document.getElementById('ws-h').value='';document.getElementById('ws-m').value='';document.getElementById('ws-n').value='';
+  document.getElementById('ws-d').value=t;document.getElementById('ws-d').max=t;document.getElementById('ws-msg').textContent='';wsm.classList.add('open');}
+document.getElementById('ws-x').onclick=()=>wsm.classList.remove('open');
+wsm.onclick=e=>{if(e.target===wsm)wsm.classList.remove('open');};
+document.getElementById('ws-ok').onclick=()=>{
+  const n=id=>Math.max(0,parseInt(document.getElementById(id).value,10)||0),mins=n('ws-h')*60+n('ws-m');
+  if(mins<1){document.getElementById('ws-msg').textContent='Enter how long it was.';return;}
+  if(mins>1440){document.getElementById('ws-msg').textContent="That's more than a day.";return;}
+  const note=document.getElementById('ws-n').value.trim(),rec={id:'w'+Date.now().toString(36)+Math.floor(Math.random()*1e3),h:mins/60,date:document.getElementById('ws-d').value||ymd(new Date()),ts:Date.now(),notes:note?[note]:[]};
+  S.worship.sessions.push(rec);save();wsm.classList.remove('open');renderWorship();
+  toast(`Added ${fmtH(rec.h)} of worship.`,()=>{S.worship.sessions=S.worship.sessions.filter(x=>x!==rec);save();renderWorship();});
+};
+setInterval(()=>{if(tab!=='x'||!S.worship.active)return;const el=document.getElementById('ws-t');if(el)el.textContent=fmtW(wsElapsed(S.worship.active));},250);
 
 // ═══════════ 3D BOTTLE & JAR (a small canvas above the panel) ═══════════
 const vcv=document.getElementById('vcv');
@@ -857,16 +959,16 @@ bottleScene.add(new THREE.Mesh(bGeo,glassShell));
 {const sh=new THREE.Mesh(bGeo,new THREE.MeshBasicMaterial({color:0x7a45dd,transparent:true,opacity:.1,side:THREE.BackSide}));sh.scale.set(1.03,1.01,1.03);bottleScene.add(sh);
   const base=new THREE.Mesh(new THREE.CylinderGeometry(.44,.46,.14,40),glassShell);base.position.y=.07;bottleScene.add(base);
  const collar=new THREE.Mesh(new THREE.TorusGeometry(.17,.028,10,32),glassShell);collar.rotation.x=Math.PI/2;collar.position.y=3.22;bottleScene.add(collar);
- for(let i=1;i<=GOAL;i++){const y=2.5*i/GOAL,ring=new THREE.Mesh(new THREE.TorusGeometry(bottleR(y)+.006,i%5===0?.012:.006,6,48),new THREE.MeshBasicMaterial({color:0xd8c8ff,transparent:true,opacity:.7}));ring.rotation.x=Math.PI/2;ring.position.y=y;bottleScene.add(ring);}}
-const waterMat=new THREE.MeshPhysicalMaterial({vertexColors:true,transparent:true,opacity:.62,roughness:.04,metalness:0,clearcoat:1,clearcoatRoughness:.05,emissive:new THREE.Color(0x1a0a60),emissiveIntensity:.18,envMapIntensity:1.2,side:THREE.DoubleSide});
-const surfMat=new THREE.MeshPhysicalMaterial({color:0x5aa8ff,transparent:true,opacity:.5,roughness:.02,metalness:0,clearcoat:1,emissive:new THREE.Color(0x1a2a90),emissiveIntensity:.25,envMapIntensity:1.5,side:THREE.DoubleSide});
+}
+const waterMat=new THREE.MeshPhysicalMaterial({vertexColors:true,transparent:true,opacity:.78,roughness:.05,metalness:0,clearcoat:1,clearcoatRoughness:.05,emissive:new THREE.Color(0x6a3cff),emissiveIntensity:.8,envMapIntensity:1.1,side:THREE.DoubleSide});
+const surfMat=new THREE.MeshPhysicalMaterial({color:0xa8ecff,transparent:true,opacity:.7,roughness:.02,metalness:0,clearcoat:1,emissive:new THREE.Color(0x4a8cff),emissiveIntensity:.9,envMapIntensity:1.5,side:THREE.DoubleSide});
 let waterBody=null,waterSurf=null,surfBase=null;
 function buildWater(h){
   if(waterBody){bottleScene.remove(waterBody);waterBody.geometry.dispose();}
   if(waterSurf){bottleScene.remove(waterSurf);waterSurf.geometry.dispose();}
   waterBody=waterSurf=null;if(h<.15)return;
   const pts=[],N=26;for(let i=0;i<=N;i++){const y=.12+(h-.12)*i/N;pts.push(new THREE.Vector2(Math.max(.001,bottleR(y)-.03),y));}
-  const g=new THREE.LatheGeometry(pts,40),pos=g.attributes.position,col=new Float32Array(pos.count*3),c1=new THREE.Color(0x2b12a8),c2=new THREE.Color(0x3f8cf0),tc=new THREE.Color();
+  const g=new THREE.LatheGeometry(pts,40),pos=g.attributes.position,col=new Float32Array(pos.count*3),c1=new THREE.Color(0x5a2cff),c2=new THREE.Color(0x6ad8ff),tc=new THREE.Color();
   for(let i=0;i<pos.count;i++){tc.copy(c1).lerp(c2,Math.min(1,pos.getY(i)/2.5));col[i*3]=tc.r;col[i*3+1]=tc.g;col[i*3+2]=tc.b;}
   g.setAttribute('color',new THREE.BufferAttribute(col,3));
   waterBody=new THREE.Mesh(g,waterMat);bottleScene.add(waterBody);
@@ -875,14 +977,16 @@ function buildWater(h){
 }
 const NB=16,bubPos=new Float32Array(NB*3),bubSeed=[];for(let i=0;i<NB;i++)bubSeed.push({a:Math.random()*6.28,r:Math.random(),y:Math.random(),s:.15+Math.random()*.25});
 const bubGeo=new THREE.BufferGeometry();bubGeo.setAttribute('position',new THREE.BufferAttribute(bubPos,3));
-const bubbles=new THREE.Points(bubGeo,new THREE.PointsMaterial({color:0xdfe9ff,size:.07,transparent:true,opacity:.55,depthWrite:false,sizeAttenuation:true}));bottleScene.add(bubbles);
+const bubbles=new THREE.Points(bubGeo,new THREE.PointsMaterial({color:0xeefaff,size:.09,transparent:true,opacity:.7,depthWrite:false,sizeAttenuation:true}));bottleScene.add(bubbles);
 function bottleStep(t){
   if(Math.abs(wTarget-wLevel)>.002){wLevel+=(wTarget-wLevel)*.05;if(Math.abs(wTarget-wLevel)<.004)wLevel=wTarget;buildWater(wLevel);}
   else if(waterBody===null&&wLevel>.15)buildWater(wLevel);
   if(waterSurf){const pa=waterSurf.geometry.attributes.position;for(let i=0;i<pa.count;i++){const x=surfBase[i*3],z=surfBase[i*3+2];pa.setY(i,Math.sin(x*7+t*2.2)*.012+Math.cos(z*6+t*1.8)*.01);}pa.needsUpdate=true;}
   glassShell.uniforms.k.value=bottleFull?1.2+Math.sin(t*3)*.12:1;
-  bottleGlow.intensity=1+Math.sin(t*2.4)*.2;
-  if(glowPool)glowPool.material.opacity=.15+.5*(wLevel/2.5);
+  const lv=wLevel/2.5;
+  bottleGlow.intensity=(.15+2.1*lv)*(1+Math.sin(t*2.4)*.15);bottleGlow.position.y=Math.max(.5,wLevel*.55);
+  waterMat.emissiveIntensity=.35+.8*lv+Math.sin(t*2)*.08;surfMat.emissiveIntensity=.5+.6*lv;
+  if(glowPool)glowPool.material.opacity=.08+.8*lv;
   bubbles.visible=wLevel>.3;
   if(bubbles.visible){for(let i=0;i<NB;i++){const b=bubSeed[i];b.y+=b.s*.006;if(b.y>1)b.y=0;const y=.15+(wLevel-.2)*b.y,rr=Math.max(.01,bottleR(y)-.07)*b.r;bubPos[i*3]=Math.cos(b.a+t*.2)*rr;bubPos[i*3+1]=y;bubPos[i*3+2]=Math.sin(b.a+t*.2)*rr;}bubGeo.attributes.position.needsUpdate=true;}
 }
@@ -1030,6 +1134,7 @@ document.getElementById('fab').onclick=()=>setSheet('open');
 window.addEventListener('resize',()=>setSheet(sstate));
 
 rebuildMeshes();render();setSheet('open');
+if(!introSeen()&&!S.log.length&&!S.subjects.length&&!S.classes.length&&!S.scraps.length)openIntro();
 </script>
 <script>
 if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});
