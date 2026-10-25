@@ -65,11 +65,11 @@ body{background:#03010a;color:var(--ink);font-family:'Nunito',system-ui,-apple-s
 .empty{text-align:center;padding:26px 6px;color:rgba(180,140,255,.4);line-height:1.7}
 .sub{display:flex;align-items:center;gap:10px;padding:11px 12px;margin-bottom:7px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.025)}
 .sub div:first-child{flex:1}
-#modal,#bkm,#am,#cm,#sm,#dm,#wtm,#lgm,#wsm{display:none;position:fixed;inset:0;z-index:50;background:rgba(3,1,10,.78);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px}
-#modal.open,#bkm.open,#am.open,#cm.open,#sm.open,#dm.open,#wtm.open,#lgm.open,#wsm.open{display:flex}
+#modal,#bkm,#am,#cm,#sm,#dm,#wtm,#lgm,#wsm,#wdm{display:none;position:fixed;inset:0;z-index:50;background:rgba(3,1,10,.78);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px}
+#modal.open,#bkm.open,#am.open,#cm.open,#sm.open,#dm.open,#wtm.open,#lgm.open,#wsm.open,#wdm.open{display:flex}
 #cm{z-index:60}
-#box,#bbox,#abox,#cbox,#sbox,#dbox,#wtbox,#lbox,#wsbox{width:100%;max-width:340px;padding:24px;border:1px solid rgba(180,140,255,.25);border-radius:10px;background:linear-gradient(135deg,rgba(12,6,28,.98),rgba(18,9,40,.98));box-shadow:0 0 40px rgba(120,60,255,.2)}
-#box h3,#bbox h3,#abox h3,#cbox h3,#sbox h3,#dbox h3,#wtbox h3,#lbox h3,#wsbox h3{font-family:'Nunito',system-ui,-apple-system,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(200,170,255,.85);margin-bottom:14px}
+#box,#bbox,#abox,#cbox,#sbox,#dbox,#wtbox,#lbox,#wsbox,#wdbox{width:100%;max-width:340px;padding:24px;border:1px solid rgba(180,140,255,.25);border-radius:10px;background:linear-gradient(135deg,rgba(12,6,28,.98),rgba(18,9,40,.98));box-shadow:0 0 40px rgba(120,60,255,.2)}
+#box h3,#bbox h3,#abox h3,#cbox h3,#sbox h3,#dbox h3,#wtbox h3,#lbox h3,#wsbox h3,#wdbox h3{font-family:'Nunito',system-ui,-apple-system,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(200,170,255,.85);margin-bottom:14px}
 .lb{display:block;font-family:'Nunito',system-ui,-apple-system,sans-serif;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(180,140,255,.55);margin-bottom:6px}
 input[type=text],input[type=time],input[type=number],input[type=date]{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(180,140,255,.2);border-radius:6px;color:var(--ink);font-family:'Nunito',system-ui,-apple-system,sans-serif;font-size:1rem;padding:9px 11px;outline:none;margin-bottom:13px;color-scheme:dark}
 input:focus{border-color:rgba(180,100,255,.55)}
@@ -157,6 +157,15 @@ body.all #fab{display:block}
   <h3 id="wt-h">Set time</h3>
   <div class="tr"><div><label class="lb" for="tw-h">Hours</label><input type="number" id="tw-h" min="0" max="999" inputmode="numeric"></div><div><label class="lb" for="tw-m">Min</label><input type="number" id="tw-m" min="0" max="59" inputmode="numeric"></div><div><label class="lb" for="tw-s">Sec</label><input type="number" id="tw-s" min="0" max="59" inputmode="numeric"></div></div>
   <div class="acts"><button class="btn ghost" id="tw-x">Cancel</button><button class="btn" id="tw-ok">Set</button></div>
+</div></div>
+<div id="wdm"><div id="wdbox">
+  <h3>Spent energy elsewhere</h3>
+  <div class="tm" style="margin-bottom:12px;line-height:1.4">Take time off what the bottle covers. No stone is placed.</div>
+  <div class="acts" style="margin-bottom:12px"><button class="btn ghost" id="wd-1">1 hour</button><button class="btn ghost" id="wd-2">2 hours</button></div>
+  <div class="tr"><div><label class="lb" for="wd-h">Hours</label><input type="number" id="wd-h" min="0" max="24" inputmode="numeric"></div><div><label class="lb" for="wd-m">Min</label><input type="number" id="wd-m" min="0" max="59" inputmode="numeric"></div></div>
+  <label class="lb" for="wd-d">Day</label><input type="date" id="wd-d">
+  <div class="acts"><button class="btn ghost" id="wd-x">Cancel</button><button class="btn" id="wd-ok">Take off</button></div>
+  <div class="tm" id="wd-msg" style="margin-top:8px;min-height:1em"></div>
 </div></div>
 <div id="wsm"><div id="wsbox">
   <h3>Add time you took</h3>
@@ -486,7 +495,7 @@ const clock=new THREE.Clock();
 })();
 
 // ═══════════ DATA ═══════════
-let S={subjects:[],log:[],skip:{},watches:[],classes:[],sus:{},scraps:[],worship:{sessions:[],active:null}};
+let S={subjects:[],log:[],skip:{},watches:[],classes:[],sus:{},scraps:[],worship:{sessions:[],active:null,drains:[]}};
 try{const r=localStorage.getItem('castle_devotion_v1');if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
 const save=()=>{try{localStorage.setItem('castle_devotion_v1',JSON.stringify(S));}catch(e){}};
 const pad=n=>String(n).padStart(2,'0');
@@ -621,7 +630,7 @@ document.getElementById('bk-r').onclick=()=>{
   S.log=d.log.filter(x=>x&&typeof x.k==='string'&&typeof x.h==='number');
   S.skip=(d.skip&&typeof d.skip==='object')?d.skip:{};
   if(d.sus&&typeof d.sus==='object'&&!Array.isArray(d.sus))S.sus=d.sus;
-  if(d.worship&&Array.isArray(d.worship.sessions))S.worship={sessions:d.worship.sessions.filter(x=>x&&x.id&&typeof x.h==='number'&&x.date),active:d.worship.active||null};
+  if(d.worship&&Array.isArray(d.worship.sessions))S.worship={sessions:d.worship.sessions.filter(x=>x&&x.id&&typeof x.h==='number'&&x.date),active:d.worship.active||null,drains:Array.isArray(d.worship.drains)?d.worship.drains.filter(x=>x&&x.id&&typeof x.h==='number'&&x.date):[]};
   if(Array.isArray(d.scraps)){S.scraps=d.scraps.filter(x=>x&&x.id&&typeof x.text==='string');if(jarReady)rebuildJar();}
   if(Array.isArray(d.classes))S.classes=d.classes.filter(x=>x&&x.id&&x.name&&x.start&&x.end&&Array.isArray(x.days)&&x.created);
   if(Array.isArray(d.watches))S.watches=d.watches.filter(x=>x&&x.id&&typeof x.name==='string'&&typeof x.acc==='number');
@@ -833,8 +842,9 @@ function worshipCredit(){
   const ev=[];
   S.log.forEach((e,i)=>ev.push({d:logDate(e),t:e.ts||0,i,w:0,h:e.h}));
   S.worship.sessions.forEach((x,i)=>ev.push({d:x.date,t:x.ts||0,i:1e6+i,w:1,h:x.h}));
+  (S.worship.drains||[]).forEach((x,i)=>ev.push({d:x.date,t:x.ts||0,i:2e6+i,w:2,h:x.h}));
   ev.sort((a,b)=>a.d.localeCompare(b.d)||a.t-b.t||a.i-b.i);
-  let c=0;for(const e of ev){if(e.w)c+=4*e.h;else c=Math.max(0,c-e.h);}
+  let c=0;for(const e of ev){if(e.w===1)c+=4*e.h;else c=Math.max(0,c-e.h);}
   return c;
 }
 function updateBottle(){
@@ -850,15 +860,17 @@ function renderWorship(){
     <label class="lb" for="ws-note" style="margin-top:14px">Something you are doing</label><div class="wnew"><input type="text" id="ws-note" maxlength="80"><button class="btn" id="ws-nadd">+ Add</button></div>
     ${a.notes.map((n,i)=>`<div class="dn" data-ni="${i}"><div><div class="nm">${esc(n.m)}</div></div><div class="hh">${fmtW(n.s*1000)}</div></div>`).join('')}
     ${a.notes.length?'<div class="tm">Long-press a note to remove it</div>':''}</div>`;
+  h+='<button class="btn ghost" id="ws-drain" style="width:100%;margin-top:8px">− Spent energy elsewhere</button>';
   const by={};wn.sessions.forEach(x=>(by[x.date]=by[x.date]||[]).push(x));
+  (wn.drains||[]).forEach(x=>(by[x.date]=by[x.date]||[]).push(Object.assign({drain:1},x)));
   const dates=Object.keys(by).sort().reverse();
   if(dates.length){
     const tk=ymd(new Date()),yd=new Date();yd.setDate(yd.getDate()-1);const yk=ymd(yd);
     h+='<div class="tm" style="margin:14px 0 0">Worship so far · long-press an entry to remove it</div>';
     let n=0;
     for(const d of dates){if(n>=60)break;
-      h+=`<div class="day">${d===tk?'Today':d===yk?'Yesterday':new Date(d+'T00:00').toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short',year:'numeric'})} · ${fmtH(by[d].reduce((x,e)=>x+e.h,0))}</div>`;
-      for(const e of by[d].slice().reverse()){n++;const hasN=e.notes&&e.notes.length,same=e.ts&&ymd(new Date(e.ts))===e.date,tod=same?new Date(e.ts).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}):'Worship';
+      h+=`<div class="day">${d===tk?'Today':d===yk?'Yesterday':new Date(d+'T00:00').toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short',year:'numeric'})} · ${fmtH(by[d].filter(e=>!e.drain).reduce((x,e)=>x+e.h,0))}</div>`;
+      for(const e of by[d].slice().reverse()){n++;if(e.drain){h+=`<div class="dn" data-did="${e.id}"><div><div class="nm">Energy spent elsewhere</div></div><div class="hh" style="color:#ffb070">−${fmtH(e.h)}</div></div>`;continue;}const hasN=e.notes&&e.notes.length,same=e.ts&&ymd(new Date(e.ts))===e.date,tod=same?new Date(e.ts).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}):'Worship';
         h+=`<div class="dn" data-sid="${e.id}"><div><div class="nm">${hasN?esc(e.notes.join(' · ')):tod}</div>${hasN&&same?`<div class="tm">${tod}</div>`:''}</div><div class="hh">${fmtH(e.h)}</div></div>`;}
     }
   }
@@ -866,6 +878,7 @@ function renderWorship(){
   const $=id=>document.getElementById(id),go=()=>{save();renderWorship();};
   if($('ws-begin'))$('ws-begin').onclick=()=>{wn.active={acc:0,at:Date.now(),notes:[]};go();};
   if($('ws-add'))$('ws-add').onclick=openWsAdd;
+  $('ws-drain').onclick=openDrain;
   if(a){
     const tt=$('ws-t');let lt=null,x0=0,y0=0;
     tt.oncontextmenu=e=>e.preventDefault();
@@ -888,12 +901,27 @@ function renderWorship(){
     el.oncontextmenu=e=>e.preventDefault();
     el.onpointerdown=e=>{x0=e.clientX;y0=e.clientY;t=setTimeout(()=>{
       if(el.dataset.ni!==undefined){const i=+el.dataset.ni;askConfirm('Remove this note?','Remove',()=>{a.notes.splice(i,1);go();});}
+      else if(el.dataset.did){const id=el.dataset.did;askConfirm('Remove this? The bottle will adjust.','Remove',()=>{wn.drains=(wn.drains||[]).filter(x=>x.id!==id);go();});}
       else{const id=el.dataset.sid;askConfirm('Remove this worship entry? The bottle will adjust.','Remove',()=>{wn.sessions=wn.sessions.filter(x=>x.id!==id);go();});}
     },550);};
     el.onpointermove=e=>{if(Math.abs(e.clientX-x0)>8||Math.abs(e.clientY-y0)>8)clearTimeout(t);};
     el.onpointerup=el.onpointercancel=el.onpointerleave=()=>clearTimeout(t);
   });
 }
+const wdm=document.getElementById('wdm');
+function openDrain(){const t=ymd(new Date());document.getElementById('wd-h').value='';document.getElementById('wd-m').value='';document.getElementById('wd-d').value=t;document.getElementById('wd-d').max=t;document.getElementById('wd-msg').textContent='';wdm.classList.add('open');}
+document.getElementById('wd-1').onclick=()=>{document.getElementById('wd-h').value='1';document.getElementById('wd-m').value='';};
+document.getElementById('wd-2').onclick=()=>{document.getElementById('wd-h').value='2';document.getElementById('wd-m').value='';};
+document.getElementById('wd-x').onclick=()=>wdm.classList.remove('open');
+wdm.onclick=e=>{if(e.target===wdm)wdm.classList.remove('open');};
+document.getElementById('wd-ok').onclick=()=>{
+  const n=id=>Math.max(0,parseInt(document.getElementById(id).value,10)||0),mins=n('wd-h')*60+n('wd-m');
+  if(mins<1){document.getElementById('wd-msg').textContent='Enter how much to take off.';return;}
+  if(mins>1440){document.getElementById('wd-msg').textContent="That's more than a day.";return;}
+  const rec={id:'d'+Date.now().toString(36)+Math.floor(Math.random()*1e3),h:mins/60,date:document.getElementById('wd-d').value||ymd(new Date()),ts:Date.now()};
+  (S.worship.drains=S.worship.drains||[]).push(rec);save();wdm.classList.remove('open');renderWorship();
+  toast(`Took ${fmtH(rec.h)} off what's covered.`,()=>{S.worship.drains=S.worship.drains.filter(x=>x!==rec);save();renderWorship();});
+};
 const wsm=document.getElementById('wsm');
 function openWsAdd(){const t=ymd(new Date());document.getElementById('ws-h').value='';document.getElementById('ws-m').value='';
   document.getElementById('ws-d').value=t;document.getElementById('ws-d').max=t;document.getElementById('ws-msg').textContent='';wsm.classList.add('open');}
@@ -1070,7 +1098,7 @@ function jarStep(t){
   if(!r2||!vmode||!document.body.classList.contains('vis'))return;
   const t=performance.now()/1000,o=VO[vmode];
   o.th+=(o.tth-o.th)*.08;o.ph+=(o.tph-o.ph)*.08;o.r+=(o.tr-o.r)*.08;
-  if(ptrs.size===0)o.tth+=vmode==='jar'?.0012:.002;
+  if(ptrs.size===0&&vmode==='jar')o.tth+=.0012;
   const sp=Math.sin(o.ph),g=o.tg;
   vcam.position.set(g.x+o.r*sp*Math.sin(o.th),g.y+o.r*Math.cos(o.ph),g.z+o.r*sp*Math.cos(o.th));vcam.lookAt(g);
   if(vmode==='bottle'){bottleStep(t);r2.render(bottleScene,vcam);}else{jarStep(t);r2.render(jarScene,vcam);}
