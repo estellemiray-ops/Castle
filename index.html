@@ -160,10 +160,10 @@ body.all #fab{display:block}
 </div></div>
 <div id="wdm"><div id="wdbox">
   <h3>Spent energy elsewhere</h3>
-  <div class="tm" style="margin-bottom:12px;line-height:1.4">Take time off what the bottle covers. No stone is placed.</div>
+  <div class="tm" style="margin-bottom:12px;line-height:1.4">Take time off what the bottle covers. No stone is placed. It comes off right away, whichever day you pick.</div>
   <div class="acts" style="margin-bottom:12px"><button class="btn ghost" id="wd-1">1 hour</button><button class="btn ghost" id="wd-2">2 hours</button></div>
   <div class="tr"><div><label class="lb" for="wd-h">Hours</label><input type="number" id="wd-h" min="0" max="24" inputmode="numeric"></div><div><label class="lb" for="wd-m">Min</label><input type="number" id="wd-m" min="0" max="59" inputmode="numeric"></div></div>
-  <label class="lb" for="wd-d">Day</label><input type="date" id="wd-d">
+  <label class="lb" for="wd-d">Day (for your records)</label><input type="date" id="wd-d">
   <div class="acts"><button class="btn ghost" id="wd-x">Cancel</button><button class="btn" id="wd-ok">Take off</button></div>
   <div class="tm" id="wd-msg" style="margin-top:8px;min-height:1em"></div>
 </div></div>
@@ -842,7 +842,7 @@ function worshipCredit(){
   const ev=[];
   S.log.forEach((e,i)=>ev.push({d:logDate(e),t:e.ts||0,i,w:0,h:e.h}));
   S.worship.sessions.forEach((x,i)=>ev.push({d:x.date,t:x.ts||0,i:1e6+i,w:1,h:x.h}));
-  (S.worship.drains||[]).forEach((x,i)=>ev.push({d:x.date,t:x.ts||0,i:2e6+i,w:2,h:x.h}));
+  (S.worship.drains||[]).forEach((x,i)=>ev.push({d:x.ts?ymd(new Date(x.ts)):x.date,t:x.ts||0,i:2e6+i,w:2,h:x.h}));
   ev.sort((a,b)=>a.d.localeCompare(b.d)||a.t-b.t||a.i-b.i);
   let c=0;for(const e of ev){if(e.w===1)c+=4*e.h;else c=Math.max(0,c-e.h);}
   return c;
