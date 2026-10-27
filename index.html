@@ -838,9 +838,16 @@ let lastDay=ymd(new Date());
 setInterval(()=>{const t=ymd(new Date());if(t!==lastDay){lastDay=t;if(tab==='s'||tab==='x')render();}},30000);
 
 // worship: slow, caring time. It fills a glowing bottle (one hour holds four hours of work) and logged work slowly empties it.
+// when something was done: its saved time, or (for older entries) the end of that class or session, or the end of that day
+function logTs(e){
+  if(e.ts)return e.ts;
+  const [y,m,d]=logDate(e).split('-').map(Number),cls=S.classes.find(x=>x.id===e.k.split('|')[0]),t=e.en||(cls&&cls.end);
+  if(t){const [h,mi]=t.split(':').map(Number);return new Date(y,m-1,d,h,mi).getTime();}
+  return new Date(y,m-1,d,23,59,59).getTime();
+}
 function worshipCredit(){
   const ev=[];
-  S.log.forEach((e,i)=>ev.push({d:logDate(e),t:e.ts||0,i,w:0,h:e.h}));
+  S.log.forEach((e,i)=>ev.push({d:logDate(e),t:logTs(e),i,w:0,h:e.h}));
   S.worship.sessions.forEach((x,i)=>ev.push({d:x.date,t:x.ts||0,i:1e6+i,w:1,h:x.h}));
   (S.worship.drains||[]).forEach((x,i)=>ev.push({d:x.ts?ymd(new Date(x.ts)):x.date,t:x.ts||0,i:2e6+i,w:2,h:x.h}));
   ev.sort((a,b)=>a.d.localeCompare(b.d)||a.t-b.t||a.i-b.i);

@@ -1,5 +1,5 @@
 // Castle of Devotion: works offline, and picks up new versions right away when you are online.
-const VERSION = 'castle-v12';
+const VERSION = 'castle-v13';
 const FILES = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'privacy.html'];
 
 self.addEventListener('install', e => {
